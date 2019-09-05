@@ -34,6 +34,9 @@ class Component extends EventEmitter {
 
     ;[Component.STATUS_NAMES[status], "statusChange"].forEach(event => {
       this.emit(event, this.err, this.status, this.name)
+      if (this.orchestrator) {
+        this.orchestrator.emit(event, this.err, this.status, this.name)
+      }
     })
   }
 
@@ -42,6 +45,7 @@ class Component extends EventEmitter {
     this.name = name ? name : this.constructor.name.toLowerCase()
     this.setStatus(Component.STATUS.REGISTERED)
     this.instance = null
+    this.orchestrator = null
 
     if (checkStatusInterval) {
       setInterval(() => this.checkStatus(this.instance), checkStatusInterval * 60 * 1000)
