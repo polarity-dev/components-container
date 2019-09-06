@@ -1,23 +1,42 @@
 const EventEmitter = require("events")
-const { STATUS } = require("./BaseComponentWrapper")
+const ComponentWrapper = require("./ComponentWrapper.js")
+const { STATUS, STATUS_NAMES, STATUS_COLORS } = require("./Status.js")
 
-class ComponentsContainer extends EventEmitter {
-  constructor() {
+class Container extends EventEmitter {
+  static get STATUS() {
+    return STATUS
+  }
+
+  static get STATUS_NAMES() {
+    return STATUS_NAMES
+  }
+
+  static get STATUS_COLORS() {
+    return STATUS_COLORS
+  }
+
+  constructor({ debug = false, noColors = false }) {
     super()
+    this.debug = debug
+    this.noColors = noColors
     this.wrappers = new Map()
   }
 
-  register(componentWrapper) {
-    componentWrapper.container = this
-    this.wrappers.set(componentWrapper.name, componentWrapper)
+  register(componentConfig) {
+    const wrapper = new ComponentWrapper(this, componentConfig)
+    this.wrappers.set(wrapper.name, wrapper)
     return this
   }
 
-  async getComponent(name, newInstance = false) {
+  async get(name, newInstance = false) {
+    if (!name) {
+      throw new Error("Missing name argument in component.get function")
+    }
+
     const componentWrapper = this.wrappers.get(name)
 
     if (!componentWrapper) {
-      throw new Error(`missing ${name} component wrapper`)
+      throw new Error(`Missing ${name} component wrapper`)
     }
 
     return await componentWrapper.getComponent(newInstance)
@@ -27,8 +46,10 @@ class ComponentsContainer extends EventEmitter {
     const wrapperNames = Array.from(this.wrappers.keys())
 
     for (let i = 0; i < wrapperNames.length; i++) {
-      await this.getComponent(wrapperNames[i])
+      await this.get(wrapperNames[i])
     }
+
+    return this
   }
 
   getStatus(name) {
@@ -65,9 +86,8 @@ class ComponentsContainer extends EventEmitter {
 
   async checkStatus() {
     await Promise.all(Array.from(this.wrappers.values()).map(wrapper => wrapper.checkStatus(wrapper.getComponent())))
-
     return this.getStatus()
   }
 }
 
-module.exports = ComponentsContainer
+module.exports = Container

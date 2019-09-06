@@ -1,29 +1,26 @@
-const TestComponentWrapper = require("./TestComponentWrapper.js")
-const Test2ComponentWrapper = require("./Test2ComponentWrapper.js")
-const { ComponentsContainer } = require("../index.js")
+const Container = require("../index.js")
 
-const testComponentWrapper = new TestComponentWrapper({ name: "test", checkStatusInterval: 10000, debug: true })
-const test2ComponentWrapper = new Test2ComponentWrapper({ name: "test2", checkStatusInterval: 10000, debug: true })
+const container = new Container({
+  debug: true, // enable the debug logs
+  noColors: false // enable the console colors of the debug logs
+})
 
-console.log(testComponentWrapper.getStatus())
-const container = new ComponentsContainer({ debug: true })
+container
+  .register(require("./components/mysql.js"))
+  .register(require("./components/products.js"))
+  .init()
 
-;(async () => {
-  const testComponent = await testComponentWrapper.getComponent(true)
-  const test2Component = await test2ComponentWrapper.getComponent(true)
+container.on("products.running",  async () => {
+  const productsComponent = await container.get("products")
 
-  testComponent.setStatusStopped()
-  test2Component.setStatusStopped()
+  // logging the product retrieved with the products component
+  const product = productsComponent.getProduct()
+  console.log(product)
+})
 
-  console.log(testComponentWrapper.getStatus())
+container.on("products.stopped",  async () => {
+  const productsComponent = await container.get("products")
 
-  container.register(testComponentWrapper)
-  container.register(test2ComponentWrapper)
-
-  await container.init()
-})()
-  .catch(console.error)
-
-setInterval(() => {
-  console.log(testComponentWrapper.getStatus())
-}, 5000)
+  // trying to get a product unsuccessfully because products component is stopped
+  productsComponent.getProduct()
+})

@@ -1,7 +1,1 @@
-const BaseComponentWrapper = require("./src/BaseComponentWrapper.js")
-const ComponentsContainer = require("./src/ComponentsContainer.js")
-
-module.exports = {
-  BaseComponentWrapper,
-  ComponentsContainer
-}
+module.exports = require("./src/Container.js")
