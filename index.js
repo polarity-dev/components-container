@@ -1,7 +1,7 @@
-const Component = require("./src/Component.js")
-const Orchestrator = require("./src/Orchestrator.js")
+const BaseComponentWrapper = require("./src/BaseComponentWrapper.js")
+const ComponentsContainer = require("./src/ComponentsContainer.js")
 
 module.exports = {
-  Component,
-  Orchestrator
+  BaseComponentWrapper,
+  ComponentsContainer
 }
