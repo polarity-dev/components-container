@@ -1,21 +1,26 @@
 {
-  "name": "components-orchestrator",
+  "name": "@soluzioni-futura/components-container",
   "version": "0.1.0",
-  "description": "components-orchestrator is a useful npm package to manage and create async and sync wrappers for your application components",
+  "description": "Easy and clean way to manage async and sync components in simple and complex projects.",
   "main": "index.js",
   "scripts": {
     "test": "node ./test/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/soluzionifutura/components-orchestrator.git"
+    "url": "git+https://github.com/soluzionifutura/components-container.git"
   },
   "keywords": [
     "component",
     "components",
-    "orchestrator",
+    "container",
+    "initialization",
     "async",
-    "init"
+    "init",
+    "client",
+    "sdk",
+    "configurations",
+    "setup"
   ],
   "author": {
     "name": "Giovanni Bruno",
@@ -31,9 +36,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/soluzionifutura/components-orchestrator/issues"
+    "url": "https://github.com/soluzionifutura/components-container/issues"
   },
-  "homepage": "https://github.com/soluzionifutura/components-orchestrator#readme",
+  "homepage": "https://github.com/soluzionifutura/components-container#readme",
   "devDependencies": {
     "@soluzioni-futura/eslint-config-soluzioni-futura": "^1.1.0",
     "eslint": "^6.3.0"
