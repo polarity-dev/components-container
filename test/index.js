@@ -6,7 +6,7 @@ const container = new Container({
 })
 
 container
-  .register(require("./components/mysql.js"))
+  .register(require("./components/mysql.js"), { host: "example.com" })
   .register(require("./components/products.js"))
   .init()
 

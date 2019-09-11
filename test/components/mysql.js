@@ -25,10 +25,11 @@ module.exports = {
   the init async function is required and must return whatever you
   need to retrieve with the container get function
    */
-  init: async ({ setStatus, getStatus }) => {
+  init: async ({ setStatus, getStatus, options }) => {
 
     // this is a fake mysql client
     const mysqlFakeClient = {
+      options,
 
       // the query function fakes a mysql query and returns a fake product object
       query: fakeSql => {
@@ -64,11 +65,6 @@ module.exports = {
   },
 
   /*
-  the checkStatusInterval property is optional and is expressed in milliseconds
-   */
-  checkStatusInterval: 5000,
-
-  /*
   the checkStatus function is optional and will be called every checkStatusInterval
    */
   checkStatus: async ({ component, setStatus }) => {
@@ -83,14 +79,21 @@ module.exports = {
     }
   },
 
-  /*
-  the debug option overrides the container debug option
-   */
-  debug: true,
+  options: {
+    /*
+    the checkStatusInterval property is optional and is expressed in milliseconds
+     */
+    checkStatusInterval: 5000,
 
-  /*
-  the noColors option overrides the container debug option
-   */
-  noColors: false
+    /*
+    the debug option overrides the container debug option
+     */
+    debug: true,
+
+    /*
+    the noColors option overrides the container debug option
+     */
+    noColors: false
+  }
 }
 
