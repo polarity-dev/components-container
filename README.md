@@ -12,7 +12,7 @@ Easy and clean way to manage async and sync components in simple and complex pro
 
 In your project run
 ```shell
-$ npm install @soluzionifutura/components-container
+$ npm install @soluzioni-futura/components-container
 ```
 
 ### The design pattern
