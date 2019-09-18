@@ -24,3 +24,7 @@ container.on("products.stopped",  async () => {
   // trying to get a product unsuccessfully because products component is stopped
   productsComponent.getProduct()
 })
+
+container.checkStatus()
+  .then(console.log)
+  .catch(console.error)

@@ -242,9 +242,9 @@ See also the list of [contributors](https://github.com/soluzionifutura/component
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-[npm-image]: https://img.shields.io/npm/v/components-container.svg
-[npm-url]: https://npmjs.org/package/components-container
-[downloads-image]: https://img.shields.io/npm/dm/components-container.svg
-[downloads-url]: https://npmjs.org/package/components-container
+[npm-image]: https://img.shields.io/npm/v/@soluzioni-futura/components-container.svg
+[npm-url]: https://npmjs.org/package/@soluzioni-futura/components-container
+[downloads-image]: https://img.shields.io/npm/dm/@soluzioni-futura/components-container.svg
+[downloads-url]: https://npmjs.org/package/@soluzioni-futura/components-container
 [gandalf-image]: http://img.shields.io/badge/gandalf-approved-61C6FF.svg
 [gandalf-url]: https://www.youtube.com/watch?v=Sagg08DrO5U

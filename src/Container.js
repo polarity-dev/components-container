@@ -90,7 +90,7 @@ class Container extends EventEmitter {
   }
 
   async checkStatus() {
-    await Promise.all(Array.from(this.wrappers.values()).map(wrapper => wrapper.checkStatus(wrapper.getComponent())))
+    await Promise.all(Array.from(this.wrappers.values()).map(wrapper => wrapper.checkStatus()))
     return this.getStatus()
   }
 }
