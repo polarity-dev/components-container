@@ -68,14 +68,16 @@ module.exports = {
   the checkStatus function is optional and will be called every checkStatusInterval
    */
   checkStatus: async ({ component, setStatus }) => {
-    /*
+    if (component) {
+      /*
     random switch of the component status from RUNNING to STOPPED
     and vice versa to fake ane intermittent connection
      */
-    if (Math.random() > 0.5) {
-      component.connect()
-    } else {
-      setStatus(STATUS.STOPPED, new Error("connection lost"))
+      if (Math.random() > 0.5) {
+        component.connect()
+      } else {
+        setStatus(STATUS.STOPPED, new Error("connection lost"))
+      }
     }
   },
 

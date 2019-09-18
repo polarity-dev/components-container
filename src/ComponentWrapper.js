@@ -19,7 +19,6 @@ class ComponentWrapper {
 
     this.container = container
     this.init = init
-    this.checkStatus = checkStatus
     this.name = name
     this.status = STATUS.UNINITIALIZED
     this.component = null
@@ -40,12 +39,17 @@ class ComponentWrapper {
       })
     }
 
-    if (checkStatus && checkStatusInterval) {
-      setInterval(async () => {
-        if (this.component) {
-          return await checkStatus(this.wrapperReferences)
-        }
-      }, checkStatusInterval)
+    if (checkStatus) {
+      this.checkStatus = () => checkStatus(this.wrapperReferences)
+      if (checkStatusInterval) {
+        setInterval(async () => {
+          if (this.component) {
+            return await checkStatus(this.wrapperReferences)
+          }
+        }, checkStatusInterval)
+      }
+    } else {
+      this.checkStatus = async () => {}
     }
   }
 

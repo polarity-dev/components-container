@@ -19,8 +19,12 @@ module.exports = {
        */
       getProduct: () => {
         console.log("Getting product...")
-        const product = mysqlFakeClient.query("SELECT * FROM PRODUCTS WHERE `id` = 123")
-        return product
+        try {
+          const product = mysqlFakeClient.query("SELECT * FROM PRODUCTS WHERE `id` = 123")
+          return product
+        } catch (err) {
+          return err
+        }
       }
     }
 
