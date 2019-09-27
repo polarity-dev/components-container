@@ -7,8 +7,13 @@ class ComponentWrapper {
     name,
     init,
     checkStatus,
-    options
+    checkStatusInterval,
+    options,
   }) {
+
+    name = options.name || name
+    checkStatusInterval = options.checkStatusInterval || checkStatusInterval || 5 /*minutes*/ * 60000
+
     if (!name || typeof name !== "string") {
       throw new Error("Missing name property in component configuration object")
     }
@@ -25,7 +30,7 @@ class ComponentWrapper {
     this.err = null
     this.options = options
 
-    const { debug, noColors, checkStatusInterval } = options
+    const { debug, noColors } = options
 
     if (debug) {
       container.on(`${name}.statusChange`, (err, status, name) => {
@@ -40,11 +45,17 @@ class ComponentWrapper {
     }
 
     if (checkStatus) {
-      this.checkStatus = () => checkStatus(this.wrapperReferences)
+      this.checkStatus = async () => {
+        if (this.status !== STATUS.UNINITIALIZED) {
+          return checkStatus(this.wrapperReferences)
+        }
+      }
+
       if (checkStatusInterval) {
         setInterval(async () => {
           if (this.component) {
-            return await checkStatus(this.wrapperReferences)
+            return await this.checkStatus(this.wrapperReferences)
+              .catch(console.error)
           }
         }, checkStatusInterval)
       }
