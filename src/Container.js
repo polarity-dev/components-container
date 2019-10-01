@@ -44,7 +44,6 @@ class Container extends EventEmitter {
     }
 
     componentConfig.options = options
-
     const wrapper = new ComponentWrapper(this, componentConfig)
     this.wrappers.set(wrapper.name, wrapper)
     return this
