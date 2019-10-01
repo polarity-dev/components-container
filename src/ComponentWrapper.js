@@ -102,6 +102,7 @@ class ComponentWrapper {
     } else {
       this.setStatus(STATUS.INITIALIZED)
       this.component = await this.init(this.wrapperReferences)
+      this.checkStatus()
       return this.component
     }
   }
