@@ -23,25 +23,17 @@ class Container extends EventEmitter {
   }
 
   register(componentConfig, options = {}) {
-    const defaults = {
+    componentConfig.options = Object.assign({
       debug: this.debug,
       noColors: this.noColors,
       checkStatusInterval: 5 /*minutes*/ * 60000
-    }
+    }, componentConfig.options)
 
-    Object.entries(defaults).forEach(([key, value]) => {
-      if (typeof componentConfig[key] === "undefined") {
-        componentConfig[key] = value
+    Object.entries(componentConfig.options).forEach(([key, value]) => {
+      if (typeof options[key] === "undefined") {
+        options[key] = value
       }
     })
-
-    if (typeof componentConfig.options === "object") {
-      Object.entries(componentConfig.options).forEach(([key, value]) => {
-        if (typeof options[key] === "undefined") {
-          options[key] = value
-        }
-      })
-    }
 
     componentConfig.options = options
     const wrapper = new ComponentWrapper(this, componentConfig)
