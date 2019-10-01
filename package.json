@@ -1,6 +1,6 @@
 {
   "name": "@soluzioni-futura/components-container",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Easy and clean way to manage async and sync components in simple and complex projects.",
   "main": "index.js",
   "scripts": {
