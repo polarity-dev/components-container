@@ -35,11 +35,11 @@ class ComponentWrapper {
     if (debug) {
       container.on(`${name}.statusChange`, (err, status, name) => {
         // eslint-disable-next-line no-console
-        console.error(`${(name + " ").padEnd(15, "-")}> ${!noColors ? STATUS_COLORS[status] : ""}${STATUS_NAMES[status]}${!noColors ? RESET_COLOR : ""}`)
+        console.log(`${(name + " ").padEnd(15, "-")}> ${!noColors ? STATUS_COLORS[status] : ""}${STATUS_NAMES[status]}${!noColors ? RESET_COLOR : ""}`)
 
         if (err) {
           // eslint-disable-next-line no-console
-          console.error(err.stack)
+          console.log(err.stack)
         }
       })
     }
