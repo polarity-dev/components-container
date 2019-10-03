@@ -15,7 +15,7 @@ class Container extends EventEmitter {
     return STATUS_COLORS
   }
 
-  constructor({ debug = false, noColors = false }) {
+  constructor({ debug = false, noColors = false } = {}) {
     super()
     this.debug = debug
     this.noColors = noColors
