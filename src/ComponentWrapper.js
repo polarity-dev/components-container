@@ -7,9 +7,8 @@ class ComponentWrapper {
     name,
     init,
     checkStatus,
-    checkStatusInterval,
-    options,
-  }) {
+    checkStatusInterval
+  }, options) {
 
     name = options.name || name
     checkStatusInterval = options.checkStatusInterval || checkStatusInterval || 5 /*minutes*/ * 60000

@@ -15,6 +15,12 @@ class Container extends EventEmitter {
     return STATUS_COLORS
   }
 
+  static addStatus(name, value, color) {
+    STATUS[name.toUpperCase()] = value
+    STATUS_NAMES[value] = name.toLowerCase()
+    STATUS_COLORS[value] = color
+  }
+
   constructor({ debug = false, noColors = false } = {}) {
     super()
     this.debug = debug
@@ -23,20 +29,7 @@ class Container extends EventEmitter {
   }
 
   register(componentConfig, options = {}) {
-    componentConfig.options = Object.assign({
-      debug: this.debug,
-      noColors: this.noColors,
-      checkStatusInterval: 5 /*minutes*/ * 60000
-    }, componentConfig.options)
-
-    Object.entries(componentConfig.options).forEach(([key, value]) => {
-      if (typeof options[key] === "undefined") {
-        options[key] = value
-      }
-    })
-
-    componentConfig.options = options
-    const wrapper = new ComponentWrapper(this, componentConfig)
+    const wrapper = new ComponentWrapper(this, componentConfig, options)
     this.wrappers.set(wrapper.name, wrapper)
     return this
   }

@@ -1,5 +1,7 @@
 const Container = require("../index.js")
 
+Container.addStatus("test", 10, "\x1b[34m")
+
 const container = new Container({
   debug: true, // enable the debug logs
   noColors: false // enable the console colors of the debug logs

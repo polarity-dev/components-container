@@ -20,7 +20,7 @@ $ npm install @soluzioni-futura/components-container
 The `components-container` design pattern is inspired from [PHP Slim's Dependecy Container](http://www.slimframework.com/docs/v3/concepts/di.html).
 You have a higher order container that handles multiple components and manage to grant 
 communication between them.
-You can consider a `component` every configured SDK, client or abstraction that allow your project to use a service or to accomplish certain operations.
+You can consider a `component` every configured SDK, client or abstraction that allows your project to use a service or to accomplish certain operations.
 
 ### Usage
 
@@ -188,22 +188,21 @@ module.exports = {
     }
   },
 
-  options: {
-    /*
-    the checkStatusInterval property is optional and is expressed in milliseconds
-     */
-    checkStatusInterval: 5000,
-
-    /*
-    the debug option overrides the container debug option
-     */
-    debug: true,
-
-    /*
-    the noColors option overrides the container debug option
-     */
-    noColors: false
-  }
+  
+  /*
+  the checkStatusInterval property is optional and is expressed in milliseconds
+   */
+  checkStatusInterval: 5000,
+    
+  /*
+  the debug option overrides the container debug option
+   */
+  debug: true,
+    
+  /*
+  the noColors option overrides the container debug option
+   */
+  noColors: false
 }
 ```
 

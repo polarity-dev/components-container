@@ -1,6 +1,5 @@
 const { STATUS } = require("../../index")
 
-
 /*
 this is the mysql component definition:
 
@@ -81,21 +80,19 @@ module.exports = {
     }
   },
 
-  options: {
-    /*
-    the checkStatusInterval property is optional and is expressed in milliseconds
-     */
-    checkStatusInterval: 5000,
+  /*
+  the checkStatusInterval property is optional and is expressed in milliseconds
+   */
+  checkStatusInterval: 5000,
 
-    /*
-    the debug option overrides the container debug option
-     */
-    debug: true,
+  /*
+  the debug option overrides the container debug option
+   */
+  debug: true,
 
-    /*
-    the noColors option overrides the container debug option
-     */
-    noColors: false
-  }
+  /*
+  the noColors option overrides the container debug option
+   */
+  noColors: false
 }
 
