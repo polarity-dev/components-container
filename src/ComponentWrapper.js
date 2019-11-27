@@ -34,11 +34,11 @@ class ComponentWrapper {
     this.err = null
     this.options = options
 
-    container.on(`${name}.statusChange`, (err, status) => {
-      this.debug(`----> ${!this.container.noColors ? STATUS_COLORS[status] : ""}${STATUS_NAMES[status]}${!this.container.noColors ? RESET_COLOR : ""}`)
+    container.on(`${name}.statusChange`, (err, status, name) => {
+      this.container.debug(`${`${name} `.padEnd(20, "-")}> ${!this.container.noColors ? STATUS_COLORS[status] : ""}${STATUS_NAMES[status]}${!this.container.noColors ? RESET_COLOR : ""}`)
 
       if (err) {
-        this.debug(err.stack)
+        this.container.debug(err.stack)
       }
     })
 
