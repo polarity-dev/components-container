@@ -32,6 +32,15 @@ class Container extends EventEmitter {
   register(componentConfig, options = {}) {
     const wrapper = new ComponentWrapper(this, componentConfig, options)
     this.wrappers.set(wrapper.name, wrapper)
+
+    this.on(`${wrapper.name}.statusChange`, (err, status, name) => {
+      this.debug(`${`${name} `.padEnd(20, "-")}> ${!this.noColors ? STATUS_COLORS[status] : ""}${STATUS_NAMES[status]}${!this.noColors ? "\x1b[0m" : ""}`)
+
+      if (err) {
+        this.debug(err.stack)
+      }
+    })
+
     return this
   }
 

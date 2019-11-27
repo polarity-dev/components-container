@@ -1,8 +1,6 @@
 const { STATUS, STATUS_COLORS, STATUS_NAMES } = require("./Status.js")
 const Debug = require("debug")
 
-const RESET_COLOR = "\x1b[0m"
-
 class ComponentWrapper {
   constructor(container, {
     name,
@@ -33,14 +31,6 @@ class ComponentWrapper {
     this.component = null
     this.err = null
     this.options = options
-
-    container.on(`${name}.statusChange`, (err, status, name) => {
-      this.container.debug(`${`${name} `.padEnd(20, "-")}> ${!this.container.noColors ? STATUS_COLORS[status] : ""}${STATUS_NAMES[status]}${!this.container.noColors ? RESET_COLOR : ""}`)
-
-      if (err) {
-        this.container.debug(err.stack)
-      }
-    })
 
     if (checkStatus) {
       this.checkStatus = async () => {
@@ -106,4 +96,3 @@ class ComponentWrapper {
 }
 
 module.exports = ComponentWrapper
-
