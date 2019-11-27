@@ -29,7 +29,10 @@ class ComponentWrapper {
     this.err = null
     this.options = options
 
-    const { debug, noColors } = options
+    const {
+      debug = this.container.debug,
+      noColors = this.container.noColors
+    } = options
 
     if (debug) {
       container.on(`${name}.statusChange`, (err, status, name) => {
@@ -52,10 +55,8 @@ class ComponentWrapper {
 
       if (checkStatusInterval) {
         setInterval(async () => {
-          if (this.component) {
-            return await this.checkStatus(this.wrapperReferences)
-              .catch(console.error)
-          }
+          return await this.checkStatus(this.wrapperReferences)
+            .catch(console.error)
         }, checkStatusInterval)
       }
     } else {
