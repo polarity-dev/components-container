@@ -24,7 +24,7 @@ module.exports = {
   the init async function is required and must return whatever you
   need to retrieve with the container get function
    */
-  init: async ({ setStatus, getStatus, options }) => {
+  init: async ({ setStatus, getStatus, options, debug }) => {
 
     // this is a fake mysql client
     const mysqlFakeClient = {
@@ -35,7 +35,7 @@ module.exports = {
         if (getStatus().status !== STATUS.RUNNING) {
           throw new Error("Can't execute query, not connected to database")
         } else {
-          console.log("Faking query execution:", fakeSql)
+          debug("Faking query execution:", fakeSql)
           return {
             product: {
               id: 123,
@@ -48,10 +48,10 @@ module.exports = {
 
       // the connect function fakes the connection to the database
       connect: () => {
-        console.log("Connecting to database...")
+        debug("Connecting to database...")
         setTimeout(() => {
           if (getStatus().status !== STATUS.RUNNING) {
-            console.log("Connection established")
+            debug("Connection established")
             setStatus(STATUS.RUNNING)
           }
         }, 500)
@@ -83,16 +83,6 @@ module.exports = {
   /*
   the checkStatusInterval property is optional and is expressed in milliseconds
    */
-  checkStatusInterval: 5000,
-
-  /*
-  the debug option overrides the container debug option
-   */
-  debug: true,
-
-  /*
-  the noColors option overrides the container debug option
-   */
-  noColors: false
+  checkStatusInterval: 5000
 }
 

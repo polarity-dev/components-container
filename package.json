@@ -4,7 +4,7 @@
   "description": "Easy and clean way to manage async and sync components in simple and complex projects.",
   "main": "index.js",
   "scripts": {
-    "test": "node ./test/index.js"
+    "test": "DEBUG=* node ./test/index.js"
   },
   "repository": {
     "type": "git",
@@ -42,5 +42,8 @@
   "devDependencies": {
     "@soluzioni-futura/eslint-config-soluzioni-futura": "^1.1.0",
     "eslint": "^6.3.0"
+  },
+  "dependencies": {
+    "debug": "^4.1.1"
   }
 }

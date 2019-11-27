@@ -1,6 +1,7 @@
 const EventEmitter = require("events")
 const ComponentWrapper = require("./ComponentWrapper.js")
 const { STATUS, STATUS_NAMES, STATUS_COLORS } = require("./Status.js")
+const Debug = require("debug")
 
 class Container extends EventEmitter {
   static get STATUS() {
@@ -21,9 +22,9 @@ class Container extends EventEmitter {
     STATUS_COLORS[value] = color
   }
 
-  constructor({ debug = false, noColors = false } = {}) {
+  constructor({ debugTag = "container", noColors = false } = {}) {
     super()
-    this.debug = debug
+    this.debug = Debug(debugTag)
     this.noColors = noColors
     this.wrappers = new Map()
   }

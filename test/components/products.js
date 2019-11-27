@@ -6,7 +6,7 @@ this is the mysql component definition:
 module.exports = {
   name: "products",
 
-  init: async ({ container, setStatus }) => {
+  init: async ({ container, setStatus, debug }) => {
     // retrieving the mysqlFakeClient
     const mysqlFakeClient = await container.get("mysql")
 
@@ -18,7 +18,7 @@ module.exports = {
       simulate the retrieval of a product and returns it
        */
       getProduct: () => {
-        console.log("Getting product...")
+        debug("Getting product...")
         try {
           const product = mysqlFakeClient.query("SELECT * FROM PRODUCTS WHERE `id` = 123")
           return product

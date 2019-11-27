@@ -30,8 +30,8 @@ const mysqlComponent = require("./components/mysqlComponent.js")
 const productsComponent = require("./components/productsComponent.js")
 
 const container = new Container({
-  debug: true, // enable the debug logs
-  noColors: false // enable the console colors of the debug logs
+  debugTag: "container", // override of the default debug tag; default "container"
+  noColors: true // enable the console colors of the debug logs; default true
 })
 
 container
@@ -73,14 +73,9 @@ module.exports = {
   },
 
   /*
-  the debug option overrides the container debug option
+  the debugTag property overrides the default debugTag property; defaults to component name
    */
-  debug: true,
-
-  /*
-  the noColors option overrides the container debug option
-   */
-  noColors: false
+  debugTag: "debug-log-tag-name",
 }
 ```
 
@@ -120,8 +115,7 @@ there are 2 required fields:
 and 4 optional:
 - checkStatusInterval
 - checkStatus
-- debug
-- noColors
+- debugTag
  */
 
 module.exports = {
@@ -195,14 +189,9 @@ module.exports = {
   checkStatusInterval: 5000,
     
   /*
-  the debug option overrides the container debug option
+    the debugTag property overrides the default debugTag property; defaults to component name
    */
-  debug: true,
-    
-  /*
-  the noColors option overrides the container debug option
-   */
-  noColors: false
+  debugTag: "debug-log-tag-name",
 }
 ```
 
@@ -211,8 +200,8 @@ module.exports = {
 const Container = require("components-container")
 
 const container = new Container({
-  debug: true, // enable the debug logs
-  noColors: false // enable the console colors of the debug logs
+  debugTag: "container", // override of the default debug tag; default "container"
+  noColors: true // enable the console colors of the debug logs; default true
 })
 
 container

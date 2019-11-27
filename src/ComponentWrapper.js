@@ -1,4 +1,5 @@
 const { STATUS, STATUS_COLORS, STATUS_NAMES } = require("./Status.js")
+const Debug = require("debug")
 
 const RESET_COLOR = "\x1b[0m"
 
@@ -7,7 +8,8 @@ class ComponentWrapper {
     name,
     init,
     checkStatus,
-    checkStatusInterval
+    checkStatusInterval,
+    debugTag
   }, options) {
 
     name = options.name || name
@@ -21,6 +23,9 @@ class ComponentWrapper {
       throw new Error(`Missing init function in ${name} component configuration object`)
     }
 
+    debugTag = options.debugTag || debugTag
+
+    this.debug = Debug(debugTag || name)
     this.container = container
     this.init = init
     this.name = name
@@ -29,22 +34,13 @@ class ComponentWrapper {
     this.err = null
     this.options = options
 
-    const {
-      debug = this.container.debug,
-      noColors = this.container.noColors
-    } = options
+    container.on(`${name}.statusChange`, (err, status) => {
+      this.debug(`----> ${!this.container.noColors ? STATUS_COLORS[status] : ""}${STATUS_NAMES[status]}${!this.container.noColors ? RESET_COLOR : ""}`)
 
-    if (debug) {
-      container.on(`${name}.statusChange`, (err, status, name) => {
-        // eslint-disable-next-line no-console
-        console.log(`${(name + " ").padEnd(15, "-")}> ${!noColors ? STATUS_COLORS[status] : ""}${STATUS_NAMES[status]}${!noColors ? RESET_COLOR : ""}`)
-
-        if (err) {
-          // eslint-disable-next-line no-console
-          console.log(err.stack)
-        }
-      })
-    }
+      if (err) {
+        this.debug(err.stack)
+      }
+    })
 
     if (checkStatus) {
       this.checkStatus = async () => {
@@ -56,7 +52,7 @@ class ComponentWrapper {
       if (checkStatusInterval) {
         setInterval(async () => {
           return await this.checkStatus(this.wrapperReferences)
-            .catch(console.error)
+            .catch(this.debug)
         }, checkStatusInterval)
       }
     } else {
@@ -71,7 +67,8 @@ class ComponentWrapper {
       component: this.component,
       options: this.options,
       setStatus: (...args) => this.setStatus(...args),
-      getStatus: (...args) => this.getStatus(...args)
+      getStatus: (...args) => this.getStatus(...args),
+      debug: this.debug
     }
   }
 
