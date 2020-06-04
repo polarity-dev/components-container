@@ -1,4 +1,4 @@
-const Container = require("../index.js")
+const Container = require("..")
 const debug = require("debug")("debug")
 
 const container = new Container({

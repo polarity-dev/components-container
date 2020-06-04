@@ -1,4 +1,4 @@
-const { STATUS } = require("../../index")
+const { STATUS } = require("../..")
 
 /*
 this is the mysql component definition:

@@ -1,14 +1,49 @@
-const { STATUS, STATUS_COLORS, STATUS_NAMES } = require("./Status.js")
-const Debug = require("debug")
+import { STATUS, STATUS_COLORS, STATUS_NAMES } from "./Status"
+import Container from './Container'
+import Debug from "debug"
 
-class ComponentWrapper {
-  constructor(container, {
+type WrapperReferences = {
+  name: string,
+  container: Container,
+  component: any
+  options: Options
+  setStatus: (status: number, err: Error | null) => void
+  getStatus: () => {}
+  debug: debug.Debugger
+}
+
+export type ComponentConfig = {
+  name: string
+  init: (wrapperReferences?: WrapperReferences) => {}
+  checkStatus?: (wrapperReferences?: WrapperReferences) => Promise<void>
+  checkStatusInterval?: number
+  debugTag?: string
+}
+
+export type Options = {
+  [key: string]: any
+}
+
+export default class ComponentWrapper {
+  debug: debug.Debugger
+  container: Container
+  component: any
+  name: ComponentConfig["name"]
+  init: ComponentConfig["init"]
+  checkStatus: ComponentConfig["checkStatus"]
+  checkStatusInterval: ComponentConfig["checkStatusInterval"]
+  debugTag: ComponentConfig["debugTag"]
+  status: number
+  err: Error | null
+  options: Options
+
+  constructor(container: Container, {
     name,
     init,
     checkStatus,
     checkStatusInterval,
     debugTag
-  }, options) {
+  }: ComponentConfig, options: Options) {
 
     name = options.name || name
     checkStatusInterval = options.checkStatusInterval || checkStatusInterval || 5 /*minutes*/ * 60000
@@ -41,7 +76,7 @@ class ComponentWrapper {
 
       if (checkStatusInterval) {
         setInterval(async () => {
-          return await this.checkStatus(this.wrapperReferences)
+          return await this.checkStatus!(this.wrapperReferences)
             .catch(this.debug)
         }, checkStatusInterval)
       }
@@ -50,14 +85,14 @@ class ComponentWrapper {
     }
   }
 
-  get wrapperReferences() {
+  get wrapperReferences(): WrapperReferences {
     return {
       name: this.name,
       container: this.container,
       component: this.component,
       options: this.options,
-      setStatus: (...args) => this.setStatus(...args),
-      getStatus: (...args) => this.getStatus(...args),
+      setStatus: (status: number, err: Error | null) => this.setStatus(status, err),
+      getStatus: () => this.getStatus(),
       debug: this.debug
     }
   }
@@ -69,7 +104,7 @@ class ComponentWrapper {
     }
   }
 
-  setStatus(status, err = null) {
+  setStatus(status: number, err: Error | null = null) {
     if (this.status === status) {
       return
     }
@@ -89,10 +124,8 @@ class ComponentWrapper {
     } else {
       this.setStatus(STATUS.INITIALIZED)
       this.component = await this.init(this.wrapperReferences)
-      this.checkStatus()
+      this.checkStatus!()
       return this.component
     }
   }
 }
-
-module.exports = ComponentWrapper
