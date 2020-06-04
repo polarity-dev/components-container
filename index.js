@@ -1,1 +1,1 @@
-module.exports = require("./src/Container.js")
+module.exports = require("./dist/Container.js").default

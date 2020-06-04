@@ -1,3 +1,4 @@
 {
-  "extends": "@soluzioni-futura/eslint-config-soluzioni-futura"
+  "extends": "@soluzioni-futura/eslint-config-soluzioni-futura",
+  "ignorePatterns": ["/dist"]
 }

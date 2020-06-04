@@ -1,9 +1,13 @@
-const EventEmitter = require("events")
-const ComponentWrapper = require("./ComponentWrapper.js")
-const { STATUS, STATUS_NAMES, STATUS_COLORS } = require("./Status.js")
-const Debug = require("debug")
+import { EventEmitter } from "events"
+import ComponentWrapper, { ComponentConfig, Options } from "./ComponentWrapper"
+import { STATUS, STATUS_NAMES, STATUS_COLORS } from "./Status"
+import Debug from "debug"
 
-class Container extends EventEmitter {
+export = class Container extends EventEmitter {
+  debug: debug.Debugger
+  noColors: boolean
+  wrappers: Map<string, ComponentWrapper>
+
   static get STATUS() {
     return STATUS
   }
@@ -16,20 +20,20 @@ class Container extends EventEmitter {
     return STATUS_COLORS
   }
 
-  static addStatus(name, value, color) {
+  static addStatus(name: string, value: number, color: string) {
     STATUS[name.toUpperCase()] = value
     STATUS_NAMES[value] = name.toLowerCase()
     STATUS_COLORS[value] = color
   }
 
-  constructor({ debugTag = "container", noColors = false } = {}) {
+  constructor({ debugTag = "container", noColors = false }: { debugTag?: string, noColors?: boolean } = {}) {
     super()
     this.debug = Debug(debugTag)
     this.noColors = noColors
     this.wrappers = new Map()
   }
 
-  register(componentConfig, options = {}) {
+  register(componentConfig: ComponentConfig, options: Options = {}) {
     const wrapper = new ComponentWrapper(this, componentConfig, options)
     this.wrappers.set(wrapper.name, wrapper)
 
@@ -44,7 +48,7 @@ class Container extends EventEmitter {
     return this
   }
 
-  async get(name, newInstance = false) {
+  async get(name: string, newInstance: boolean = false) {
     if (!name) {
       throw new Error("Missing name argument in component.get function")
     }
@@ -68,8 +72,9 @@ class Container extends EventEmitter {
     return this
   }
 
-  getStatus(name) {
-    const componentWrappers = []
+  getStatus(name: string | null = null) {
+    const componentWrappers: ComponentWrapper[] = []
+
     if (name) {
       const wrapper = this.wrappers.get(name)
 
@@ -97,13 +102,11 @@ class Container extends EventEmitter {
     }, {
       serving: true,
       components: []
-    })
+    } as { serving: boolean, components: { name: string, status: number, err: Error | null }[] })
   }
 
   async checkStatus() {
-    await Promise.all(Array.from(this.wrappers.values()).map(wrapper => wrapper.checkStatus()))
+    await Promise.all(Array.from(this.wrappers.values()).map(wrapper => wrapper.checkStatus!()))
     return this.getStatus()
   }
 }
-
-module.exports = Container
