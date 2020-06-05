@@ -11,11 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const events_1 = require("events");
 const ComponentWrapper_1 = __importDefault(require("./ComponentWrapper"));
 const Status_1 = require("./Status");
 const debug_1 = __importDefault(require("debug"));
-module.exports = class Container extends events_1.EventEmitter {
+class Container extends events_1.EventEmitter {
     constructor({ debugTag = "container", noColors = false } = {}) {
         super();
         this.debug = debug_1.default(debugTag);
@@ -101,4 +102,5 @@ module.exports = class Container extends events_1.EventEmitter {
             return this.getStatus();
         });
     }
-};
+}
+exports.default = Container;

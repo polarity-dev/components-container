@@ -1,17 +1,17 @@
 /// <reference types="debug" />
 import Container from './Container';
-declare type WrapperReferences = {
+export declare type WrapperReferences = {
     name: string;
     container: Container;
     component: any;
     options: Options;
-    setStatus: (status: number, err: Error | null) => void;
+    setStatus: (status: number, err?: Error | null) => void;
     getStatus: () => {};
     debug: debug.Debugger;
 };
 export declare type ComponentConfig = {
     name: string;
-    init: (wrapperReferences?: WrapperReferences) => {};
+    init: (wrapperReferences: WrapperReferences) => any;
     checkStatus?: (wrapperReferences?: WrapperReferences) => Promise<void>;
     checkStatusInterval?: number;
     debugTag?: string;
@@ -40,4 +40,3 @@ export default class ComponentWrapper {
     setStatus(status: number, err?: Error | null): void;
     getComponent(newInstance?: boolean): Promise<any>;
 }
-export {};
