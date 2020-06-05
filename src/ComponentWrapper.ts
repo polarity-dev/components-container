@@ -2,19 +2,19 @@ import { STATUS, STATUS_COLORS, STATUS_NAMES } from "./Status"
 import Container from './Container'
 import Debug from "debug"
 
-type WrapperReferences = {
+export type WrapperReferences = {
   name: string,
   container: Container,
   component: any
   options: Options
-  setStatus: (status: number, err: Error | null) => void
+  setStatus: (status: number, err?: Error | null) => void
   getStatus: () => {}
   debug: debug.Debugger
 }
 
 export type ComponentConfig = {
   name: string
-  init: (wrapperReferences?: WrapperReferences) => {}
+  init: (wrapperReferences: WrapperReferences) => any
   checkStatus?: (wrapperReferences?: WrapperReferences) => Promise<void>
   checkStatusInterval?: number
   debugTag?: string
@@ -91,7 +91,7 @@ export default class ComponentWrapper {
       container: this.container,
       component: this.component,
       options: this.options,
-      setStatus: (status: number, err: Error | null) => this.setStatus(status, err),
+      setStatus: (status: number, err: Error | null = null) => this.setStatus(status, err),
       getStatus: () => this.getStatus(),
       debug: this.debug
     }
@@ -110,7 +110,7 @@ export default class ComponentWrapper {
     }
 
     this.status = status
-    this.err = err
+    this.err = err || null
 
     ;[STATUS_NAMES[status], "statusChange"].forEach(event => {
       this.container.emit(event, this.err, this.status, this.name)

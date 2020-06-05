@@ -56,7 +56,7 @@ class ComponentWrapper {
             container: this.container,
             component: this.component,
             options: this.options,
-            setStatus: (status, err) => this.setStatus(status, err),
+            setStatus: (status, err = null) => this.setStatus(status, err),
             getStatus: () => this.getStatus(),
             debug: this.debug
         };
@@ -72,7 +72,7 @@ class ComponentWrapper {
             return;
         }
         this.status = status;
-        this.err = err;
+        this.err = err || null;
         [Status_1.STATUS_NAMES[status], "statusChange"].forEach(event => {
             this.container.emit(event, this.err, this.status, this.name);
             this.container.emit(`${this.name}.${event}`, this.err, this.status, this.name);

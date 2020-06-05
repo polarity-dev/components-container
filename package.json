@@ -1,8 +1,8 @@
 {
   "name": "@soluzioni-futura/components-container",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Easy and clean way to manage async and sync components in simple and complex projects.",
-  "main": "./dist/Container.js",
+  "main": "./index.js",
   "types": "./dist/Container.d.ts",
   "scripts": {
     "test": "npm run build && DEBUG=* node ./test/index.js",

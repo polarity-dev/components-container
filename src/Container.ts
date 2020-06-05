@@ -3,7 +3,7 @@ import ComponentWrapper, { ComponentConfig, Options } from "./ComponentWrapper"
 import { STATUS, STATUS_NAMES, STATUS_COLORS } from "./Status"
 import Debug from "debug"
 
-export = class Container extends EventEmitter {
+export default class Container extends EventEmitter {
   debug: debug.Debugger
   noColors: boolean
   wrappers: Map<string, ComponentWrapper>
